@@ -1,0 +1,60 @@
+plugins {
+  id 'com.android.library'
+  id 'kotlin-android'
+  id 'com.vanniktech.maven.publish'
+}
+
+android {
+  compileSdkVersion 30
+  buildToolsVersion "30.0.3"
+
+  defaultConfig {
+    minSdkVersion 21
+    targetSdkVersion 30
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+    freeCompilerArgs += [
+        "-Xallow-jvm-ir-dependencies",
+        "-Xskip-prerelease-check",
+        "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    ]
+  }
+  buildFeatures {
+    compose true
+  }
+  composeOptions {
+    kotlinCompilerExtensionVersion composeVersion
+  }
+}
+
+mavenPublish {
+  targets {
+    uploadArchives {
+      repositoryUsername = project.hasProperty('SONATYPE_USERNAME') ? SONATYPE_USERNAME : ""
+      repositoryPassword = project.hasProperty('SONATYPE_PASSWORD') ? SONATYPE_PASSWORD : ""
+    }
+  }
+}
+
+dependencies {
+  api project(':lottie')
+  implementation "androidx.compose.foundation:foundation:$composeVersion"
+  implementation "androidx.compose.ui:ui:$composeVersion"
+  testImplementation 'org.robolectric:robolectric:4.4'
+  testImplementation 'androidx.collection:collection-ktx:1.1.0'
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
+}
