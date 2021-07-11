@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     TextView showstartlocation;
     TextView showdestination;
     TextView showdistance;
+    TextView showfare;
     //get Location Variables
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Initialize Places
-        Places.initialize(getApplicationContext(), "AIzaSyDzZunQb27dQWOzm2Cx4-bn9n2WqU-1PAw");
+        Places.initialize(getApplicationContext(), "AIzaSyA8HD-E_tnN-c7zzQp4p8mwwlK1HShyBnE");
         setContentView(R.layout.activity_main);
 
         //getter
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         showstartlocation = (TextView) findViewById(R.id.from);
         showdestination = (TextView) findViewById(R.id.destination);
         showdistance = (TextView) findViewById(R.id.distance);
+        showfare = (TextView) findViewById(R.id.fare);
         //set edit text  focusable
 
         getInput_startlocation.setFocusable(false);
@@ -86,11 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 ).build(MainActivity.this);
                 //Start Activity Result
                 startActivityForResult(intent, 100);
+                //Set default text on text view showdistance
             }
         });
-        //Set default text on text view showdistance
-
-
 
         //Button
         markstartlocation = (Button) findViewById(R.id.btn_markstart);
@@ -256,7 +256,5 @@ public class MainActivity extends AppCompatActivity {
         return rad * c;
 
     }
-
-//end of code
 }
 

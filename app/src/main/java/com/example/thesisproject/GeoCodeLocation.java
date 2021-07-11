@@ -7,15 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
 public class GeoCodeLocation {
     private static final String TAG = "GeoCodeLocation";
     static double lat, lon;
-    public static void getAddressFromLocation(final String locationAddress, final Context context, final Handler handler) {
+    public static void getAddressFromLocation(final String locationAddress,final Context context, final Handler handler) {
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -61,5 +59,3 @@ public class GeoCodeLocation {
         thread.start();
     }
 }
-
-
