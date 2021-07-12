@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.usc.citius.hipster.algorithm.Hipster;
 import es.usc.citius.hipster.graph.GraphBuilder;
@@ -48,9 +50,14 @@ public class shortestpath extends AppCompatActivity {
         //output
         TextView shortestpath = (TextView)findViewById(R.id.output);
         Button run = (Button) findViewById(R.id.btn_run);
+        Button reset = (Button) findViewById(R.id.btn_reset);
         EditText init = (EditText)findViewById(R.id.txtfield_initial);
         EditText dest = (EditText)findViewById(R.id.txtfield_destination);
         mLineView = findViewById(R.id.lineView);
+
+
+
+
         //draw
         mLineView.setPointA(drawpointA);
         mLineView.setPointB(drawpointB);
@@ -83,21 +90,46 @@ public class shortestpath extends AppCompatActivity {
 
                         .createUndirectedGraph();
 
-        run.setOnClickListener(v ->{
+        //reset button
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            SearchProblem p = GraphSearchProblem
-                    .startingFrom(init.getText().toString())
-                    .in(graph)
-                    .takeCostsFromEdges()
+                        init.setText("");
+                        dest.setText("");
+                        shortestpath.setText("");
+                    }
 
-                    .build();
-            String results = Hipster.createDijkstra(p).search(dest.getText().toString()).getOptimalPaths().toString();
-            shortestpath.setText(results);
-
+//run  button
         });
+
+        run.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (init.length() == 0) {
+                    init.setError("Input Initial Point");
+                } else if (dest.length() == 0) {
+                    dest.setError("Input Destination Point");
+                } else {
+                    Toast.makeText(shortestpath.this, "Inputs Added", Toast.LENGTH_LONG).show();
+                    SearchProblem p = GraphSearchProblem
+                            .startingFrom(init.getText().toString())
+                            .in(graph)
+                            .takeCostsFromEdges()
+
+                            .build();
+                    String results = Hipster.createDijkstra(p).search(dest.getText().toString()).getOptimalPaths().toString();
+                    shortestpath.setText(results);
+                }
+            }
+
+        }  );
 
     }
     //methods
+//reset function
+
+
 
 
     //end code
